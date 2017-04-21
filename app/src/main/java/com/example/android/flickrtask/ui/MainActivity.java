@@ -12,20 +12,21 @@ import com.example.android.flickrtask.remote.NetworkUtils;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-    private ApiResponse apiResponse ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FlickrAsyncTask flickrAsyncTask =new FlickrAsyncTask(this);
-        flickrAsyncTask.setFlickrAsyncTaskCallBack(new FlickrAsyncTask.FlickrAsyncTaskCallBack() {
-            @Override
-            public void onPostExecute(ApiResponse apiRespons) {
-                apiResponse = apiRespons ;
-            }
-        });
-        flickrAsyncTask.execute("1");
+        if(savedInstanceState==null)
+        {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container ,new FlickerFragment())
+                    .commit();
+        }
+        /*
+
+        */
 
     }
 }
