@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="METHOD">"flickr.interestingness.getList"</string>
+    <string name="API_KEY">"721f8d978fa0f05812fd77a1afb7db7e"</string>
+    <string name="FORMAT">"json"</string>
+</resources>
+
