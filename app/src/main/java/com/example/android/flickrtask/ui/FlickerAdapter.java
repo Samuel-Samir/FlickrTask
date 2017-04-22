@@ -1,16 +1,19 @@
 package com.example.android.flickrtask.ui;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.android.flickrtask.R;
 import com.example.android.flickrtask.data.ApiResponse;
 import com.example.android.flickrtask.data.PhotoInfo;
+import com.example.android.flickrtask.utilities.FunctionsUtilities;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -22,11 +25,20 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
     private ApiResponse apiResponse ;
     private Activity myActivity;
 
+    private  onReachingLastPhoto reachingLastPhoto ;
+
     public void setApiResponse (ApiResponse apiResponse ,   Activity myActivity)
     {
         this.apiResponse =apiResponse;
         this.myActivity =myActivity;
         notifyDataSetChanged();
+    }
+
+    public void addNewPagePhotos (ApiResponse newApiResponse)
+    {
+        apiResponse= FunctionsUtilities.addTwoApiResponse(apiResponse ,newApiResponse);
+        notifyDataSetChanged();
+
     }
 
     @Override
@@ -41,6 +53,21 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
 
     @Override
     public void onBindViewHolder(RecyclerViewAdapterHolder holder, int position) {
+        if(position== apiResponse.getPhotos().getPhoto().size()-2)
+        {
+            int pageNum = FunctionsUtilities.getPageNum(apiResponse);
+            pageNum+=1;
+            int availablePages = FunctionsUtilities.getNumofAvailablePages(apiResponse);
+            if (pageNum <= availablePages)
+            {
+                reachingLastPhoto.onReachingLast(pageNum);
+                Toast.makeText(myActivity ,myActivity.getString(R.string.new_page),Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(myActivity ,myActivity.getString(R.string.last_page),Toast.LENGTH_LONG).show();
+            }
+        }
+
         PhotoInfo photoInfo = apiResponse.getPhotos().getPhoto().get(position);
         String size="_n";
         String photoUrl = "https://farm%s.staticflickr.com/%s/%s_%s%s.jpg";
@@ -61,6 +88,7 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
         return 0;
     }
 
+
     public class RecyclerViewAdapterHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageView ;
@@ -70,5 +98,16 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
             imageView= (ImageView) itemView.findViewById(R.id.image_item);
 
         }
+    }
+
+    public interface onReachingLastPhoto
+    {
+        void onReachingLast (int newPage) ;
+    }
+
+    public void setOnReachingLastPhoto (onReachingLastPhoto reachingLastPhoto)
+    {
+        this.reachingLastPhoto =reachingLastPhoto ;
+
     }
 }

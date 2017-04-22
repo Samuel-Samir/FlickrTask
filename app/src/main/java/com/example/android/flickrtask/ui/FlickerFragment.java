@@ -19,12 +19,11 @@ import com.example.android.flickrtask.remote.FlickrAsyncTask;
 
 public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener
 {
-    private ApiResponse apiResponse ;
+    // private ApiResponse apiResponse ;
     private RecyclerView myRecyclerView ;
     private FlickerAdapter flickerAdapter ;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    int i =1 ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +37,21 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);
         onRefresh();
+        flickerAdapter.setOnReachingLastPhoto(new FlickerAdapter.onReachingLastPhoto()
+        {
+            @Override
+            public void onReachingLast(int newPage) {
+                FlickrAsyncTask flickrAsyncTask =new FlickrAsyncTask(getActivity());
+                flickrAsyncTask.setFlickrAsyncTaskCallBack(new FlickrAsyncTask.FlickrAsyncTaskCallBack() {
+                    @Override
+                    public void onPostExecute(ApiResponse apiRespons) {
+                        flickerAdapter.addNewPagePhotos(apiRespons);
+                    }
+                });
+                flickrAsyncTask.execute(String.valueOf(newPage));
+            }
+        });
+
         return rootView;
     }
 
@@ -48,13 +62,13 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
         flickrAsyncTask.setFlickrAsyncTaskCallBack(new FlickrAsyncTask.FlickrAsyncTaskCallBack() {
             @Override
             public void onPostExecute(ApiResponse apiRespons) {
-                apiResponse = apiRespons ;
-                flickerAdapter.setApiResponse(apiResponse , getActivity());
+                // apiResponse = apiRespons ;
+                flickerAdapter.setApiResponse(apiRespons , getActivity());
 
             }
         });
-        flickrAsyncTask.execute(String.valueOf(i));
-        i++;
+        flickrAsyncTask.execute("1");
         swipeRefreshLayout.setRefreshing(false);
     }
+
 }
