@@ -9,20 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.flickrtask.R;
 import com.example.android.flickrtask.data.PhotoInfo;
 import com.example.android.flickrtask.data.Photos;
 import com.squareup.picasso.Picasso;
 
-import butterknife.BindView;
 
 public class DisplayPhotoFragment extends Fragment {
     private int position ;
     private Photos photos ;
 
-    ImageView imageView;
+    ImageView  imageView;
     TextView titleTextView;
     ImageView closeImage ;
 
@@ -31,7 +29,7 @@ public class DisplayPhotoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_display_photo, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
-        imageView =(ImageView) rootView.findViewById(R.id.photo);
+        imageView =(ImageView ) rootView.findViewById(R.id.photo);
         titleTextView = (TextView) rootView.findViewById(R.id.title_text);
         closeImage =(ImageView) rootView.findViewById(R.id.close_image);
         Bundle arguments = getArguments();

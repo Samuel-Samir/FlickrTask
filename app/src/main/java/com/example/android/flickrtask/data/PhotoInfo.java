@@ -15,17 +15,11 @@ public class PhotoInfo implements Parcelable{
     private int farm;
     private String title;
 
-    public PhotoInfo ()
-    {
 
-    }
 
     public String getId() {return id;}
     public void setId(String id) {
         this.id = id;
-    }
-    public String getOwner() {
-        return owner;
     }
     public String getSecret() {
         return secret;

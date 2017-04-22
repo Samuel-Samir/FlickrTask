@@ -3,6 +3,9 @@ package com.example.android.flickrtask.ui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +20,7 @@ import com.example.android.flickrtask.data.ApiResponse;
 import com.example.android.flickrtask.data.PhotoInfo;
 import com.example.android.flickrtask.utilities.FunctionsUtilities;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.security.PublicKey;
 
@@ -58,17 +62,47 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewAdapterHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerViewAdapterHolder holder, final int position) {
         checkReachLast (position);
         PhotoInfo photoInfo = apiResponse.getPhotos().getPhoto().get(position);
         String size="_n";
         String photoUrl = "https://farm%s.staticflickr.com/%s/%s_%s%s.jpg";
         photoUrl= String.format(photoUrl , photoInfo.getFarm() ,photoInfo.getServer() ,photoInfo.getId() ,photoInfo.getSecret(),size ) ;
-        Picasso.with(myActivity)
+       Picasso.with(myActivity)
                 .load(photoUrl)
                 .placeholder(R.drawable.noposter)
                 .error(R.drawable.noposter)
                 .into(holder.imageView);
+
+        holder.imageView.setDrawingCacheEnabled(true);
+        holder.imageView.buildDrawingCache();
+
+        BitmapDrawable drawable = (BitmapDrawable) holder.imageView.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+
+       /* Bitmap mBitmap ;
+
+        Picasso.with(myActivity)
+                .load(photoUrl)
+                .placeholder(R.drawable.noposter)
+                .error(R.drawable.noposter)
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
+                        holder.imageView.setImageBitmap(bitmap);
+
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {}
+
+
+                });*/
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

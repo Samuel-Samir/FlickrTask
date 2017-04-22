@@ -2,6 +2,7 @@ package com.example.android.flickrtask.remote;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import com.example.android.flickrtask.data.ApiResponse;
@@ -19,6 +20,7 @@ public class FlickrAsyncTask extends AsyncTask <String ,Void,ApiResponse> {
     private ProgressDialog dialog;
     private Context context;
     private FlickrAsyncTaskCallBack flickrAsyncTaskCallBack ;
+
     public  FlickrAsyncTask (Context context)
     {
         dialog =new ProgressDialog(context);
