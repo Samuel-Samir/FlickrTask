@@ -4,12 +4,23 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.flickrtask.ui.FlickerFragment">
 
-   <android.support.v7.widget.RecyclerView
+   <android.support.v4.widget.SwipeRefreshLayout
+       android:id="@+id/swipe_refresh"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/photos_recycler_view"
-       >
+       android:layout_height="match_parent">
 
-   </android.support.v7.widget.RecyclerView>
+      <android.support.v7.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/photos_recycler_view"
+          >
+      </android.support.v7.widget.RecyclerView>
 
+   </android.support.v4.widget.SwipeRefreshLayout>
+ <TextView
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:textColor="#343434"
+
+     />
 </FrameLayout>

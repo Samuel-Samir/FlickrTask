@@ -27,9 +27,9 @@ public class FlickrAsyncTask extends AsyncTask <String ,Void,ApiResponse> {
 
     @Override
     protected void onPreExecute() {
-        this.dialog.setMessage("loading...");
+      /*  this.dialog.setMessage("loading...");
         this.dialog.show();
-        super.onPreExecute();
+        super.onPreExecute();*/
     }
 
     @Override
@@ -56,9 +56,9 @@ public class FlickrAsyncTask extends AsyncTask <String ,Void,ApiResponse> {
 
     @Override
     protected void onPostExecute(ApiResponse apiResponse) {
-        if (dialog.isShowing()) {
+   /*     if (dialog.isShowing()) {
             dialog.dismiss();
-        }
+        }*/
         if(apiResponse!=null)
         {
             flickrAsyncTaskCallBack.onPostExecute(apiResponse);

@@ -3,6 +3,7 @@ package com.example.android.flickrtask.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,10 +17,14 @@ import com.example.android.flickrtask.data.PhotoInfo;
 import com.example.android.flickrtask.remote.FlickrAsyncTask;
 
 
-public class FlickerFragment extends Fragment {
+public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener
+{
     private ApiResponse apiResponse ;
     private RecyclerView myRecyclerView ;
     private FlickerAdapter flickerAdapter ;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    int i =1 ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,8 +34,15 @@ public class FlickerFragment extends Fragment {
         myRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         flickerAdapter = new FlickerAdapter();
         myRecyclerView.setAdapter(flickerAdapter);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
+        onRefresh();
+        return rootView;
+    }
 
-
+    @Override
+    public void onRefresh() {
 
         FlickrAsyncTask flickrAsyncTask =new FlickrAsyncTask(getActivity());
         flickrAsyncTask.setFlickrAsyncTaskCallBack(new FlickrAsyncTask.FlickrAsyncTaskCallBack() {
@@ -41,9 +53,8 @@ public class FlickerFragment extends Fragment {
 
             }
         });
-        flickrAsyncTask.execute("1");
-
-        return rootView;
+        flickrAsyncTask.execute(String.valueOf(i));
+        i++;
+        swipeRefreshLayout.setRefreshing(false);
     }
-
 }

@@ -42,11 +42,13 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
     @Override
     public void onBindViewHolder(RecyclerViewAdapterHolder holder, int position) {
         PhotoInfo photoInfo = apiResponse.getPhotos().getPhoto().get(position);
-        String size="_m";
+        String size="_n";
         String photoUrl = "https://farm%s.staticflickr.com/%s/%s_%s%s.jpg";
         photoUrl= String.format(photoUrl , photoInfo.getFarm() ,photoInfo.getServer() ,photoInfo.getId() ,photoInfo.getSecret(),size ) ;
         Picasso.with(myActivity)
                 .load(photoUrl)
+                .placeholder(R.drawable.noposter)
+                .error(R.drawable.noposter)
                 .into(holder.imageView);
     }
 
