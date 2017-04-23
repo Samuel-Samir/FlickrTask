@@ -3,10 +3,8 @@ package com.example.android.flickrtask.remote;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.example.android.flickrtask.data.ApiResponse;
-import com.example.android.flickrtask.utilities.DbUtilities;
+import com.example.android.flickrtask.models.ApiResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -30,10 +28,9 @@ public class FlickrAsyncTask extends AsyncTask <String ,Void,ApiResponse> {
 
     @Override
     protected void onPreExecute() {
-       this.dialog.setMessage("loading...");
+        this.dialog.setMessage("loading...");
         this.dialog.show();
         super.onPreExecute();
-
     }
 
     @Override
@@ -64,7 +61,6 @@ public class FlickrAsyncTask extends AsyncTask <String ,Void,ApiResponse> {
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
-
         if(apiResponse!=null)
         {
             flickrAsyncTaskCallBack.onPostExecute(apiResponse);

@@ -3,7 +3,6 @@ package com.example.android.flickrtask.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.flickrtask.R;
-import com.example.android.flickrtask.data.PhotoInfo;
-import com.example.android.flickrtask.data.Photos;
-import com.squareup.picasso.Picasso;
+import com.example.android.flickrtask.cache.ImageLoader;
+import com.example.android.flickrtask.models.PhotoInfo;
+import com.example.android.flickrtask.models.Photos;
+import com.example.android.flickrtask.utilities.Utils;
 
 
-public class DisplayPhotoFragment extends Fragment {
+public class DisplayPhotoFragment extends Fragment  {
     private int position ;
     private Photos photos ;
-
+    private ImageLoader imgLoader;
     ImageView  imageView;
     TextView titleTextView;
     ImageView closeImage ;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class DisplayPhotoFragment extends Fragment {
         imageView =(ImageView ) rootView.findViewById(R.id.photo);
         titleTextView = (TextView) rootView.findViewById(R.id.title_text);
         closeImage =(ImageView) rootView.findViewById(R.id.close_image);
+        imgLoader = new ImageLoader(getActivity());
+
         Bundle arguments = getArguments();
         if(arguments!=null)
         {
@@ -55,16 +58,9 @@ public class DisplayPhotoFragment extends Fragment {
     public void setPhotoDetails ()
     {
         PhotoInfo photoInfo = photos.getPhoto().get(position);
-        String size="_n";
-        String photoUrl = "https://farm%s.staticflickr.com/%s/%s_%s%s.jpg";
-        photoUrl= String.format(photoUrl , photoInfo.getFarm() ,photoInfo.getServer() ,photoInfo.getId() ,photoInfo.getSecret(),size ) ;
-        Picasso.with(getActivity())
-                .load(photoUrl)
-                .placeholder(R.drawable.noposter)
-                .error(R.drawable.noposter)
-                .into(imageView);
-       titleTextView.setText(photoInfo.getTitle());
-
+        titleTextView.setText(photoInfo.getTitle());
+        String photoUrl = Utils.getPhotoUri(photoInfo);
+        imgLoader.displayImage(photoUrl, imageView);
     }
 
 }

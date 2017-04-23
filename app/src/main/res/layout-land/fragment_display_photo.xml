@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.example.android.flickrtask.ui.DisplayPhotoFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/noposter"
+        android:id="@+id/photo"
+        />
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/view_padding"
+        android:text="samuel samir"
+        android:textColor="@color/white"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:paddingStart="@dimen/mid_padding"
+        android:paddingLeft="@dimen/mid_padding"
+        />
+
+    <ImageView
+        android:id="@+id/close_image"
+        android:layout_width="94dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/mid_padding"
+        android:src="@drawable/ic_close"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:paddingEnd="@dimen/mid_padding"
+        android:paddingRight="@dimen/mid_padding"
+        />
+
+
+</RelativeLayout>

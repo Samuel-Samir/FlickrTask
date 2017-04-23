@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight=".75"
-            android:padding="16dp"
+            android:padding="@dimen/view_padding"
             android:text="samuel samir"
             android:textColor="@color/white" />
 
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight=".25"
-            android:padding="8dp"
+            android:padding="@dimen/mid_padding"
             android:src="@drawable/ic_close" />
 
     </LinearLayout>

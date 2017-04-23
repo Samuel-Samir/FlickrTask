@@ -1,4 +1,4 @@
-package com.example.android.flickrtask.data;
+package com.example.android.flickrtask.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
