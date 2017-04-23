@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.android.flickrtask.R;
+import com.example.android.flickrtask.services.MyService;
 import com.example.android.flickrtask.ui.fragment.FlickerFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,5 +20,11 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.container ,new FlickerFragment())
                     .commit();
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

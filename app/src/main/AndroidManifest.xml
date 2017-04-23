@@ -20,14 +20,13 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTop">
+        </activity>
+        <activity android:name=".ui.activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.activity.SplashScreen">
-
         </activity>
 
         <service android:name=".services.MyService"

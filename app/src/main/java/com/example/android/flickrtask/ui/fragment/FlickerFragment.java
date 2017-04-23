@@ -12,11 +12,14 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.flickrtask.R;
+import com.example.android.flickrtask.cache.ImageLoader;
 import com.example.android.flickrtask.models.ApiResponse;
 import com.example.android.flickrtask.remote.FlickrAsyncTask;
 import com.example.android.flickrtask.services.MyService;
@@ -36,9 +39,10 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private RecyclerView myRecyclerView ;
     private FlickerAdapter flickerAdapter ;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private boolean firstLaunsh =false ;
     private TextView connectionTextView;
     private JobScheduler mJobScheduler;
+    private ImageLoader imgLoader;
+
 
 
 
@@ -54,6 +58,8 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);
         connectionTextView =(TextView) rootView.findViewById(R.id.connection_error);
+        imgLoader = new ImageLoader(getActivity());
+
         setHasOptionsMenu(true);
         if(savedInstanceState==null)
         {
@@ -68,6 +74,8 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 swipeRefreshLayout.setRefreshing(false);
             }
         }
+
+        //this is listener called when reach last photo to load the next page
         flickerAdapter.setOnReachingLastPhoto(new FlickerAdapter.onReachingLastPhoto()
         {
             @Override
@@ -84,13 +92,14 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
             }
         });
 
+        //this is listener called when the Service load the data to notifay UI
         MyService.setOnServiceFinish(new MyService.onServiceFinishCallBack() {
-            @Override
-            public void onServiceFinishAsyncTask(ApiResponse apiRespons) {
-                apiResponse = apiRespons ;
-                flickerAdapter.setApiResponse(apiRespons, getActivity());
-            }
-        }
+                                         @Override
+                                         public void onServiceFinishAsyncTask(ApiResponse apiRespons) {
+                                             apiResponse = apiRespons ;
+                                             flickerAdapter.setApiResponse(apiRespons, getActivity());
+                                         }
+                                     }
         );
         return rootView;
     }
@@ -160,14 +169,27 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .setPersisted(true);
         mJobScheduler.schedule(builder.build());
+
     }
 
 
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // inflater.inflate(R.m, menu);
-
+        inflater.inflate(R.menu.refresh_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id  = item.getItemId();
+        if(id==R.id.action_refresh)
+        {
+            imgLoader.clearCahce();
+            onRefresh();
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

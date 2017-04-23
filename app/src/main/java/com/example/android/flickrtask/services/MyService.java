@@ -22,6 +22,7 @@ import me.tatarka.support.job.JobService;
 
 public class MyService extends JobService {
     private static onServiceFinishCallBack onServiceFinishCall ;
+    public static boolean appIsKilled = false ;
 
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -33,7 +34,7 @@ public class MyService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        return false;
+        return appIsKilled;
     }
 
 
