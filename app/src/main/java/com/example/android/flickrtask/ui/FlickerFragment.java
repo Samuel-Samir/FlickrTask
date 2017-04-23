@@ -1,7 +1,6 @@
 package com.example.android.flickrtask.ui;
 
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,9 +14,9 @@ import android.view.ViewGroup;
 
 import com.example.android.flickrtask.R;
 import com.example.android.flickrtask.data.ApiResponse;
-import com.example.android.flickrtask.data.FlickrDbHelper;
 import com.example.android.flickrtask.data.PhotoInfo;
 import com.example.android.flickrtask.remote.FlickrAsyncTask;
+import com.example.android.flickrtask.utilities.DbUtilities;
 import com.example.android.flickrtask.utilities.FunctionsUtilities;
 
 import java.util.List;
@@ -25,10 +24,10 @@ import java.util.List;
 
 public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener
 {
-   // private ApiResponse apiResponse ;
     private RecyclerView myRecyclerView ;
     private FlickerAdapter flickerAdapter ;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean firstLaunsh =false ;
 
 
     @Override
@@ -69,11 +68,13 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
         flickrAsyncTask.setFlickrAsyncTaskCallBack(new FlickrAsyncTask.FlickrAsyncTaskCallBack() {
             @Override
             public void onPostExecute(ApiResponse apiRespons) {
-                // apiResponse = apiRespons ;
+                addPhotosToDB(apiRespons.getPhotos().getPhoto());
                 flickerAdapter.setApiResponse(apiRespons , getActivity());
-                FunctionsUtilities.clearDb(getActivity());
-                addPhotosToDB (apiRespons.getPhotos().getPhoto());
-
+                if(firstLaunsh)
+                {
+                    DbUtilities.clearDb(getActivity());
+                }
+                firstLaunsh=true;
             }
         });
         flickrAsyncTask.execute("1");
@@ -90,7 +91,7 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     List<PhotoInfo> photo = (List<PhotoInfo>) params[0];
                     for (int i=0 ;i<photo.size() ;i++)
                     {
-                        long index= FunctionsUtilities.addNewPhoto( photo.get(i) , getActivity());
+                        long index= DbUtilities.addNewPhotoToDb( photo.get(i) , getActivity());
                         Log.i("index" ,String.valueOf(index));
                     }
                 }
@@ -99,7 +100,5 @@ public class FlickerFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }.execute(photo);
 
     }
-
-
 
 }

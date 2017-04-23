@@ -10,7 +10,7 @@ import com.example.android.flickrtask.data.FlickrContract.PhotoEntry;
  */
 
 public class FlickrDbHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME ="flickr_photos.dp";
+    private static final String DATABASE_NAME ="flickrPhotos.dp";
     private static final int DATABASE_VERSION = 1;
 
     public FlickrDbHelper(Context context){
@@ -20,12 +20,9 @@ public class FlickrDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_PHOTO_TABLE = "CREATE TABLE " + PhotoEntry.TABLE_NAME + " ( "+
-                PhotoEntry._ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                PhotoEntry.COLUMN_SECRET+" TEXT NOT NULL, "+
-                PhotoEntry.COLUMN_SERVER+" TEXT NOT NULL, "+
-                PhotoEntry.COLUMN_FARM+" TEXT NOT NULL, "+
-                PhotoEntry.COLUMN_TITLE+" TEXT NOT NULL, "+
-                PhotoEntry.COLUMN_PHOPO_BLOB+" BLOB NOT NULL "+ ");";
+                PhotoEntry.COLUMN_PHOTO_ID +" TEXT NOT NULL, "+
+                PhotoEntry.COLUMN_PHOPO_BLOB +" BLOB NOT NULL "+ ");";
+
         db.execSQL(SQL_CREATE_PHOTO_TABLE);
 
     }

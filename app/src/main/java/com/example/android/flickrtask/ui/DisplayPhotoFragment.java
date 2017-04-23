@@ -27,8 +27,6 @@ public class DisplayPhotoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_display_photo, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
         imageView =(ImageView ) rootView.findViewById(R.id.photo);
         titleTextView = (TextView) rootView.findViewById(R.id.title_text);
         closeImage =(ImageView) rootView.findViewById(R.id.close_image);

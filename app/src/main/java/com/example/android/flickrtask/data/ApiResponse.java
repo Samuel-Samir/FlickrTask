@@ -11,6 +11,4 @@ public class ApiResponse {
     public Photos getPhotos() {
         return photos;
     }
-
-
 }

@@ -39,7 +39,7 @@ public final class NetworkUtils {
                 //.appendEncodedPath(moviesOrder)
                 .appendQueryParameter(METHOD ,context.getString(R.string.METHOD))
                 .appendQueryParameter(API_KEY ,context.getString(R.string.API_KEY))
-                .appendQueryParameter(PER_PAGE ,"50")
+                .appendQueryParameter(PER_PAGE ,"30")
                 .appendQueryParameter(PAGE ,pageNumber)
                 .appendQueryParameter(FORMAT ,context.getString(R.string.FORMAT))
                 .appendQueryParameter(NO_JSON_CALL_BACK ,"1")

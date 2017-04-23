@@ -11,13 +11,7 @@ public class FlickrContract {
     public static final class PhotoEntry implements BaseColumns
     {
         public static final String TABLE_NAME = "photo";
-        public static final String COLUMN_SECRET="secret";
-        public static final String COLUMN_SERVER="server";
-        public static final String COLUMN_FARM="farm";
-        public static final String COLUMN_TITLE="title";
+        public static final String COLUMN_PHOTO_ID="photoId";
         public static final String COLUMN_PHOPO_BLOB="image";
-
-
-
     }
 }

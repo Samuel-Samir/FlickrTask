@@ -3,12 +3,14 @@ package com.example.android.flickrtask.ui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +19,14 @@ import android.widget.Toast;
 
 import com.example.android.flickrtask.R;
 import com.example.android.flickrtask.data.ApiResponse;
+import com.example.android.flickrtask.data.FlickrContract;
 import com.example.android.flickrtask.data.PhotoInfo;
+import com.example.android.flickrtask.utilities.DbUtilities;
 import com.example.android.flickrtask.utilities.FunctionsUtilities;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import com.example.android.flickrtask.data.FlickrContract.PhotoEntry;
+
 
 import java.security.PublicKey;
 
@@ -64,45 +70,30 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
     @Override
     public void onBindViewHolder(final RecyclerViewAdapterHolder holder, final int position) {
         checkReachLast (position);
+
         PhotoInfo photoInfo = apiResponse.getPhotos().getPhoto().get(position);
+
         String size="_n";
         String photoUrl = "https://farm%s.staticflickr.com/%s/%s_%s%s.jpg";
         photoUrl= String.format(photoUrl , photoInfo.getFarm() ,photoInfo.getServer() ,photoInfo.getId() ,photoInfo.getSecret(),size ) ;
-       Picasso.with(myActivity)
-                .load(photoUrl)
-                .placeholder(R.drawable.noposter)
-                .error(R.drawable.noposter)
-                .into(holder.imageView);
 
-        holder.imageView.setDrawingCacheEnabled(true);
-        holder.imageView.buildDrawingCache();
+      /*  Cursor cursor = DbUtilities.getPhotoFromDb(photoInfo.getId(),myActivity);
+        if(cursor.getCount()>0)
+        {
+            cursor.moveToNext();
+            String id  = cursor.getString(cursor.getColumnIndex(PhotoEntry.COLUMN_PHOTO_ID));
+            byte[] bytes = cursor.getBlob(cursor.getColumnIndex(PhotoEntry.COLUMN_PHOTO_ID));
+            Bitmap imageBitmap = DbUtilities.convertByteArrToBitmap(bytes);
+            holder.imageView.setImageBitmap(imageBitmap);
 
-        BitmapDrawable drawable = (BitmapDrawable) holder.imageView.getDrawable();
-        Bitmap bitmap = drawable.getBitmap();
-
-       /* Bitmap mBitmap ;
-
-        Picasso.with(myActivity)
-                .load(photoUrl)
-                .placeholder(R.drawable.noposter)
-                .error(R.drawable.noposter)
-                .into(new Target() {
-                    @Override
-                    public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
-                        holder.imageView.setImageBitmap(bitmap);
-
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {}
+        }*/
+            Picasso.with(myActivity)
+                    .load(photoUrl)
+                    .placeholder(R.drawable.noposter)
+                    .error(R.drawable.noposter)
+                    .into(holder.imageView);
 
 
-                });*/
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,14 +120,13 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
             if (pageNum <= availablePages)
             {
                 reachingLastPhoto.onReachingLast(pageNum);
-                Toast.makeText(myActivity ,myActivity.getString(R.string.new_page),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(myActivity ,myActivity.getString(R.string.new_page),Toast.LENGTH_SHORT).show();
             }
             else {
                 Toast.makeText(myActivity ,myActivity.getString(R.string.last_page),Toast.LENGTH_LONG).show();
             }
         }
     }
-
     @Override
     public int getItemCount() {
         if(apiResponse!=null)
@@ -146,15 +136,11 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
         return 0;
     }
 
-
     public class RecyclerViewAdapterHolder extends RecyclerView.ViewHolder {
-
         private ImageView imageView ;
-
         public RecyclerViewAdapterHolder(View itemView) {
             super(itemView);
             imageView= (ImageView) itemView.findViewById(R.id.image_item);
-
         }
     }
 
@@ -162,11 +148,8 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
     {
         void onReachingLast (int newPage) ;
     }
-
     public void setOnReachingLastPhoto (onReachingLastPhoto reachingLastPhoto)
     {
         this.reachingLastPhoto =reachingLastPhoto ;
-
     }
-
 }

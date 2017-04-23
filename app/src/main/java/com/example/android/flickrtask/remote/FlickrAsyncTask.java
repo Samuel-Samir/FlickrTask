@@ -1,11 +1,12 @@
 package com.example.android.flickrtask.remote;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.android.flickrtask.data.ApiResponse;
+import com.example.android.flickrtask.utilities.DbUtilities;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -18,22 +19,21 @@ import java.net.URL;
 public class FlickrAsyncTask extends AsyncTask <String ,Void,ApiResponse> {
     private final String LOG_TAG = FlickrAsyncTask.class.getName();
     private ProgressDialog dialog;
-    private Context context;
+    private Activity activity;
     private FlickrAsyncTaskCallBack flickrAsyncTaskCallBack ;
 
-    public  FlickrAsyncTask (Context context)
+    public  FlickrAsyncTask (Activity activity)
     {
-        dialog =new ProgressDialog(context);
-        this.context=context;
+        dialog =new ProgressDialog(activity);
+        this.activity=activity;
     }
 
     @Override
     protected void onPreExecute() {
-      /*
        this.dialog.setMessage("loading...");
         this.dialog.show();
         super.onPreExecute();
-        */
+
     }
 
     @Override
@@ -43,7 +43,7 @@ public class FlickrAsyncTask extends AsyncTask <String ,Void,ApiResponse> {
         {
             return null;
         }
-        URL flickrUrlRequest = NetworkUtils.buildUrl(params[0], context );
+        URL flickrUrlRequest = NetworkUtils.buildUrl(params[0], activity );
         try {
 
             jasonResponse = NetworkUtils.getResponseFromAPI(flickrUrlRequest);
@@ -60,11 +60,11 @@ public class FlickrAsyncTask extends AsyncTask <String ,Void,ApiResponse> {
 
     @Override
     protected void onPostExecute(ApiResponse apiResponse) {
-   /*
+
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
-         */
+
         if(apiResponse!=null)
         {
             flickrAsyncTaskCallBack.onPostExecute(apiResponse);
