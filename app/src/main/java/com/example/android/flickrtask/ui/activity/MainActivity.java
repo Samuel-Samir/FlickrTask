@@ -1,9 +1,10 @@
-package com.example.android.flickrtask.ui;
+package com.example.android.flickrtask.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.android.flickrtask.R;
+import com.example.android.flickrtask.ui.fragment.FlickerFragment;
 
 public class MainActivity extends AppCompatActivity {
 

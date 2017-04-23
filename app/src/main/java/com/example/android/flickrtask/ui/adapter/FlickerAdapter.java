@@ -1,4 +1,4 @@
-package com.example.android.flickrtask.ui;
+package com.example.android.flickrtask.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +15,7 @@ import com.example.android.flickrtask.R;
 import com.example.android.flickrtask.cache.ImageLoader;
 import com.example.android.flickrtask.models.ApiResponse;
 import com.example.android.flickrtask.models.PhotoInfo;
+import com.example.android.flickrtask.ui.fragment.DisplayPhotoFragment;
 import com.example.android.flickrtask.utilities.Utils;
 
 /**
@@ -68,7 +69,7 @@ public class FlickerAdapter extends RecyclerView.Adapter<FlickerAdapter.Recycler
             public void onClick(View v) {
                 DisplayPhotoFragment displayPhotoFragment = new DisplayPhotoFragment();
                 Bundle bundle =new Bundle();
-                bundle.putParcelable(PHOTOS_LIST,apiResponse.getPhotos());
+                bundle.putParcelable(PHOTOS_LIST,apiResponse);
                 bundle.putInt(PODITION,position);
                 displayPhotoFragment.setArguments(bundle);
                 ((FragmentActivity)myActivity).getSupportFragmentManager()

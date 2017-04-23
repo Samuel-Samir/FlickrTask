@@ -4,4 +4,6 @@
     <dimen name="mid_padding">8dp</dimen>
     <dimen name="small_padding">4dp</dimen>
     <dimen name="textSize">20sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="image_dim">250dp</dimen>
 </resources>

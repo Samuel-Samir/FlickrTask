@@ -6,4 +6,6 @@
     <string name="last_page">This is last page avalible</string>
     <string name="new_page">Loading new page</string>
     <string name="error_msg">Connection lost</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="refresh">Refresh</string>
 </resources>
