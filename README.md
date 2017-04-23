@@ -28,7 +28,7 @@
   ![device1](https://cloud.githubusercontent.com/assets/20879706/25318338/8e87d95e-288c-11e7-8ec5-df0e15ad36cf.png)
 
 
-  ![device1](https://cloud.githubusercontent.com/assets/20879706/25318338/8e87d95e-288c-11e7-8ec5-df0e15ad36cf.png)
+  ![device-3png](https://cloud.githubusercontent.com/assets/20879706/25318351/26bc91d8-288d-11e7-87ec-7508d0497c31.png)
 
   
 
